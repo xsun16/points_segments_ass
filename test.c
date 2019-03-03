@@ -108,6 +108,16 @@ int * quick_func(int rows, int size, int **arr, int *p_arr){
 	return res;
 }
 
+
+void compare_res(int * naive_res, int *quick_res , int p){
+    for (int j = 0; j < p; ++j) {
+        if(naive_res[j] != quick_res[j]){
+            printf("Error");
+            exit(0);
+        }
+    }
+}
+
 int main() {	
 	const char * files[] = {"input1.txt", "input2.txt", "input3.txt"};   
 
@@ -145,11 +155,24 @@ int main() {
 			print_array_2D(segments, s, 2);
 			print_array(points, p);
 			//TODO: pass s, p, segments, and points to your two algorithms
+			printf("the result is:\n");
+			int * naive_res = naive_func(s, p, segments, points);
+			int * quick_res = quick_func(s, p, segments, points);
+			printf("*****************\n");
 			//the output should be an array of size p containing 
 			//-for each point- the number of covering segments 
 			
 			//TODO: implement - compare these outputs from 2 algorithms
-			
+			for (int j = 0; j < p; ++j) {
+				if(naive_res[j] != quick_res[j]){
+					printf("Error");
+					fclose(pfile);
+					exit(0);
+				}
+			}
+            compare_res(naive_res, quick_res, p);
+			free(naive_res);
+			free(quick_res);
 		}
 		fclose(pfile);
 	}
